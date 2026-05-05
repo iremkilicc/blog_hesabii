@@ -12,17 +12,12 @@ function login() {
 
   if (username === "admin" && password === "admin") {
     closeLogin();
-
     document.getElementById("githubContact").classList.remove("hidden");
     document.getElementById("adminNotice").classList.remove("hidden");
-
     clearInputs();
-
-    document.getElementById("contact").scrollIntoView({
-      behavior: "smooth"
-    });
+    document.getElementById("contact").scrollIntoView({ behavior: "smooth" });
   } else {
-    triggerTrollOverlay("login");
+    alert("Kullanıcı adı veya şifre hatalı.");
   }
 }
 
@@ -38,12 +33,7 @@ function searchContent() {
 
   items.forEach((item) => {
     const text = item.innerText.toLowerCase();
-
-    if (searchValue === "" || text.includes(searchValue)) {
-      item.style.display = "";
-    } else {
-      item.style.display = "none";
-    }
+    item.style.display = searchValue === "" || text.includes(searchValue) ? "" : "none";
   });
 }
 
@@ -61,12 +51,9 @@ function triggerTrollOverlay(reason) {
   laughSound.pause();
   laughSound.currentTime = 0;
   laughSound.volume = 1;
+  laughSound.play().catch(() => console.log("Ses engellenmiş olabilir."));
 
-  laughSound.play().catch(() => {
-    console.log("Ses tarayıcı tarafından engellenmiş olabilir.");
-  });
-
-  let timeLeft = 5;
+  let timeLeft = 3;
   countdownText.textContent = timeLeft;
 
   const timer = setInterval(() => {
@@ -79,7 +66,7 @@ function triggerTrollOverlay(reason) {
       clearInputs();
 
       if (reason === "path" || reason === "query" || reason === "404") {
-        window.location.href = "index.html";
+        window.location.href = "/blog_hesabii/";
       }
     }
   }, 1000);
@@ -109,7 +96,6 @@ function checkSuspiciousInput(value) {
     "onload",
     "onclick",
     "alert",
-    "alert(",
     "prompt",
     "confirm",
     "javascript:",
@@ -194,7 +180,13 @@ function checkSuspiciousPath() {
     "document.cookie"
   ];
 
-  const allowedPaths = ["/", "/index.html"];
+  const allowedPaths = [
+    "/",
+    "/index.html",
+    "/blog_hesabii",
+    "/blog_hesabii/",
+    "/blog_hesabii/index.html"
+  ];
 
   const isSuspiciousPath = suspiciousPaths.some((item) => path.includes(item));
   const isSuspiciousQuery = suspiciousQueries.some((item) => query.includes(item));
