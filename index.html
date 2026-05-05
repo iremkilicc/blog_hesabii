@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Metin Dataçalan | Yazılım Geliştirme Uzmanı</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <audio id="laughSound" preload="auto">
+    <source src="https://www.myinstants.com/media/sounds/risada.mp3" type="audio/mpeg">
+  </audio>
+
+  <div id="trollOverlay" class="troll-overlay">
+    <div class="troll-box">
+      <div class="laugh-emoji">😂</div>
+      <div class="troll-ring"></div>
+      <div class="countdown" id="countdown">5</div>
+    </div>
+  </div>
+
+  <header class="navbar">
+    <div class="nav-left">
+      <button class="search-toggle" onclick="toggleSearch()">🔍</button>
+      <input
+        id="searchInput"
+        class="search-input"
+        type="text"
+        placeholder="Sitede ara..."
+        oninput="handleInputCheck(this); searchContent();"
+        onpaste="setTimeout(() => { handleInputCheck(this); searchContent(); }, 50)"
+      />
+    </div>
+
+    <div class="logo">Metin<span>Dataçalan</span></div>
+
+    <nav class="nav-links">
+      <a href="#about">Hakkında</a>
+      <a href="#experience">Deneyim</a>
+      <a href="#blog">Blog</a>
+      <a href="#projects">Projeler</a>
+      <a href="#contact">İletişim</a>
+      <button class="login-btn" onclick="openLogin()">Login</button>
+    </nav>
+  </header>
+
+  <div id="loginModal" class="modal">
+    <div class="modal-box">
+      <button class="close-btn" onclick="closeLogin()">×</button>
+      <h2>Admin Girişi</h2>
+      <p>GitHub bağlantısı yalnızca admin girişinden sonra iletişim alanında görünür.</p>
+
+      <input id="username" type="text" placeholder="Kullanıcı adı"
+        oninput="handleInputCheck(this)"
+        onpaste="setTimeout(() => handleInputCheck(this), 50)" />
+
+      <input id="password" type="password" placeholder="Şifre"
+        oninput="handleInputCheck(this)"
+        onpaste="setTimeout(() => handleInputCheck(this), 50)" />
+
+      <button class="modal-login-btn" onclick="login()">Giriş Yap</button>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="hero-content searchable">
+      <p class="badge">Software Developer</p>
+      <h1 class="hologram-title">Metin Dataçalan</h1>
+      <h2>Yazılım Geliştirme Uzmanı</h2>
+      <p>
+        Kurumsal yazılım çözümleri, web uygulamaları ve iş süreçleri otomasyonu
+        üzerine çalışan yazılım geliştirme uzmanı.
+      </p>
+
+      <div class="hero-buttons">
+        <a href="#projects" class="primary-btn">Projeleri İncele</a>
+        <a href="#contact" class="secondary-btn">İletişime Geç</a>
+      </div>
+    </div>
+
+    <div class="hero-image">
+      <div class="image-glow"></div>
+      <img src="profile.jpg" alt="Metin Dataçalan" />
+    </div>
+  </section>
+
+  <section id="about" class="section">
+    <div class="section-title">
+      <p>About Me</p>
+      <h2>Hakkında</h2>
+    </div>
+
+    <div class="about-grid">
+      <div class="info-card searchable">
+        <div class="card-icon">📍</div>
+        <h3>Doğum Yeri</h3>
+        <p>İstanbul</p>
+      </div>
+
+      <div class="info-card searchable">
+        <div class="card-icon">💻</div>
+        <h3>İlgi Alanları</h3>
+        <p>Web geliştirme, kurumsal yazılım sistemleri, veritabanı yönetimi ve otomasyon sistemleri.</p>
+      </div>
+
+      <div class="info-card searchable">
+        <div class="card-icon">⚙️</div>
+        <h3>Yazılım Geçmişi</h3>
+        <p>Kurumsal firmalara özel yönetim panelleri, API servisleri ve raporlama sistemleri geliştirme.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section light">
+    <div class="section-title">
+      <p>Education</p>
+      <h2>Eğitim</h2>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item searchable">
+        <span>2014 - 2018</span>
+        <h3>İstanbul Anadolu Lisesi</h3>
+        <p>Sayısal alan üzerine lise eğitimi.</p>
+      </div>
+
+      <div class="timeline-item searchable">
+        <span>2018 - 2022</span>
+        <h3>İstanbul Üniversitesi</h3>
+        <p>Bilgisayar Mühendisliği Bölümü.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience" class="section">
+    <div class="section-title">
+      <p>Experience</p>
+      <h2>İş Deneyimi</h2>
+    </div>
+
+    <div class="experience-grid">
+      <div class="experience-card searchable">
+        <div class="company-badge">01</div>
+        <h3>Sektör Yazılım</h3>
+        <h4>Junior Software Developer</h4>
+        <span>4 Yıl</span>
+        <p>Web tabanlı yönetim panelleri, müşteri takip sistemleri ve veritabanı işlemleri geliştirdi.</p>
+      </div>
+
+      <div class="experience-card searchable">
+        <div class="company-badge">02</div>
+        <h3>HasSektör Yazılım</h3>
+        <h4>Software Developer</h4>
+        <span>2 Yıl</span>
+        <p>API entegrasyonları, backend servisleri, raporlama sistemleri ve kurumsal web uygulamaları geliştirdi.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="blog" class="section light">
+    <div class="section-title">
+      <p>Blog</p>
+      <h2>Yazılar</h2>
+    </div>
+
+    <div class="card-grid">
+      <article class="blog-card searchable">
+        <span>Yazılım</span>
+        <h3>Kurumsal Yazılım Projelerinde Dikkat Edilmesi Gerekenler</h3>
+        <p>Ölçeklenebilirlik, kullanıcı rolleri ve sürdürülebilir kod yapısı.</p>
+      </article>
+
+      <article class="blog-card searchable">
+        <span>Database</span>
+        <h3>Veritabanı Tasarımında Temiz Yapı</h3>
+        <p>Normalizasyon, ilişkiler, indeksleme ve performanslı sorgu yazımı.</p>
+      </article>
+
+      <article class="blog-card searchable">
+        <span>Frontend</span>
+        <h3>Web Uygulamalarında Kullanıcı Deneyimi</h3>
+        <p>Basit, anlaşılır ve kullanıcı dostu arayüzlerin projeye kattığı değer.</p>
+      </article>
+
+      <article class="blog-card searchable">
+        <span>Project</span>
+        <h3>Yazılım Geliştiriciler İçin Proje Yönetimi Notları</h3>
+        <p>Planlama, görev takibi, versiyon kontrolü ve ekip içi iletişim.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="projects" class="section">
+    <div class="section-title">
+      <p>Projects</p>
+      <h2>Projeler</h2>
+    </div>
+
+    <div class="card-grid">
+      <div class="project-card searchable">
+        <h3>Stok Takip Sistemi</h3>
+        <p>Ürün, depo ve stok hareketlerini yönetmek için geliştirilen web tabanlı sistem.</p>
+        <div class="tags"><span>JavaScript</span><span>SQL</span><span>Dashboard</span></div>
+      </div>
+
+      <div class="project-card searchable">
+        <h3>Müşteri Yönetim Paneli</h3>
+        <p>Müşteri kayıtları, iletişim geçmişi ve satış süreçlerini takip eden panel.</p>
+        <div class="tags"><span>CRM</span><span>API</span><span>Backend</span></div>
+      </div>
+
+      <div class="project-card searchable">
+        <h3>Personel Takip Uygulaması</h3>
+        <p>Personel bilgileri, izin süreçleri ve raporlama işlemleri için geliştirilen sistem.</p>
+        <div class="tags"><span>HR</span><span>Automation</span><span>Panel</span></div>
+      </div>
+
+      <div class="project-card searchable">
+        <h3>Raporlama ve Analiz Dashboard’u</h3>
+        <p>Şirket içi verilerin grafikler ve tablolarla analiz edildiği yönetim ekranı.</p>
+        <div class="tags"><span>Charts</span><span>Data</span><span>UI</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section contact-section">
+    <div class="section-title">
+      <p>Contact</p>
+      <h2>İletişim</h2>
+    </div>
+
+    <div class="contact-box searchable">
+      <a href="https://www.instagram.com/metindatacalan/" target="_blank">Instagram</a>
+      <a href="tel:+905555555555">+90 555 555 55 55</a>
+      <a href="mailto:metin@example.com">metin@example.com</a>
+      <a id="githubContact" class="github-contact hidden" href="https://github.com/" target="_blank">GitHub</a>
+    </div>
+
+    <p id="adminNotice" class="admin-notice hidden">
+      Admin girişi aktif: GitHub bağlantısı iletişim alanına eklendi.
+    </p>
+  </section>
+
+  <footer>
+    <p>© 2026 Metin Dataçalan. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
