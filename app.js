@@ -1,3 +1,5 @@
+const GITHUB_LINK = "https://github.com/dtclnmetin";
+
 function openLogin() {
   document.getElementById("loginModal").classList.add("active");
 }
@@ -13,7 +15,10 @@ function login() {
   if (username === "admin" && password === "admin") {
     closeLogin();
 
-    document.getElementById("githubContact").classList.remove("hidden");
+    const githubBtn = document.getElementById("githubContact");
+    githubBtn.href = GITHUB_LINK;
+    githubBtn.classList.remove("hidden");
+
     document.getElementById("adminNotice").classList.remove("hidden");
 
     clearInputs();
@@ -38,12 +43,7 @@ function searchContent() {
 
   items.forEach((item) => {
     const text = item.innerText.toLowerCase();
-
-    if (searchValue === "" || text.includes(searchValue)) {
-      item.style.display = "";
-    } else {
-      item.style.display = "none";
-    }
+    item.style.display = searchValue === "" || text.includes(searchValue) ? "" : "none";
   });
 }
 
@@ -51,7 +51,7 @@ function handleInputCheck(inputElement) {
   checkSuspiciousInput(inputElement.value);
 }
 
-function triggerTrollOverlay(reason) {
+function triggerTrollOverlay() {
   const overlay = document.getElementById("trollOverlay");
   const countdownText = document.getElementById("countdown");
   const laughSound = document.getElementById("laughSound");
@@ -77,10 +77,7 @@ function triggerTrollOverlay(reason) {
       clearInterval(timer);
       overlay.classList.remove("active");
       clearInputs();
-
-      if (reason === "path") {
-        window.location.href = "/blog_hesabii/";
-      }
+      window.location.href = "/blog_hesabii/";
     }
   }, 1000);
 }
@@ -109,34 +106,17 @@ function checkSuspiciousInput(value) {
     "onload",
     "onclick",
     "alert",
-    "alert(",
-    "prompt",
-    "confirm",
     "javascript:",
     "document.cookie",
     "document.location",
     "window.location",
-    "localstorage",
-    "sessionstorage",
-    "innerhtml",
     "fetch(",
     "eval(",
-    "settimeout(",
-    "setinterval(",
-    "select *",
-    "drop table",
-    "union select",
-    "insert into",
-    "delete from",
-    "or 1=1",
-    "' or '1'='1",
-    "\" or \"1\"=\"1",
     "../",
     "..\\",
     "/etc/passwd",
-    "admin=true",
-    "role=admin",
-    "debug=true"
+    "union select",
+    "drop table"
   ];
 
   const isSuspicious = suspiciousPatterns.some((pattern) =>
@@ -144,46 +124,47 @@ function checkSuspiciousInput(value) {
   );
 
   if (isSuspicious) {
-    triggerTrollOverlay("input");
+    triggerTrollOverlay();
   }
 }
 
-function checkSuspiciousPath() {
+function checkSuspiciousRoute() {
   const path = window.location.pathname.toLowerCase();
+  const query = window.location.search.toLowerCase();
 
-  const suspiciousPaths = [
-    "/admin",
-    "/login",
-    "/dashboard",
-    "/panel",
-    "/secret",
-    "/hidden",
-    "/private",
-    "/backup",
-    "/config",
-    "/api",
-    "/debug",
-    "/console",
-    "/root",
-    "/flag",
-    "/ctf",
-    "/hack",
-    "/phpmyadmin",
-    "/wp-admin",
-    "/robots.txt",
-    "/.env",
-    "/.git"
+  const suspiciousWords = [
+    "admin",
+    "login",
+    "dashboard",
+    "panel",
+    "secret",
+    "hidden",
+    "private",
+    "backup",
+    "config",
+    "api",
+    "debug",
+    "console",
+    "root",
+    "flag",
+    "ctf",
+    "hack",
+    "phpmyadmin",
+    "wp-admin",
+    "robots.txt",
+    ".env",
+    ".git"
   ];
 
-  const isSuspiciousPath = suspiciousPaths.some((item) =>
-    path.includes(item)
+  const shouldTrigger = suspiciousWords.some((word) =>
+    path.includes(word) || query.includes(word)
   );
 
-  if (isSuspiciousPath) {
-    triggerTrollOverlay("path");
+  if (shouldTrigger) {
+    triggerTrollOverlay();
   }
 }
 
 window.addEventListener("load", () => {
-  checkSuspiciousPath();
+  checkSuspiciousRoute();
 });
