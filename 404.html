@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Yönlendiriliyor...</title>
+</head>
+<body>
+  <script>
+    const repo = "/blog_hesabii/";
+    const attemptedPath = window.location.pathname.toLowerCase();
+    window.location.href = repo + "?blocked=" + encodeURIComponent(attemptedPath);
+  </script>
+</body>
+</html>
