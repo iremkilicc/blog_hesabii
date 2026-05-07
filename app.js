@@ -116,7 +116,10 @@ function checkSuspiciousInput(value) {
     "..\\",
     "/etc/passwd",
     "union select",
-    "drop table"
+    "drop table",
+    "admin=true",
+    "role=admin",
+    "debug=true"
   ];
 
   const isSuspicious = suspiciousPatterns.some((pattern) =>
@@ -128,15 +131,30 @@ function checkSuspiciousInput(value) {
   }
 }
 
+function normalizeText(text) {
+  return text
+    .toLowerCase()
+    .replace(/[-_.%20]+/g, " ")
+    .replace(/[^a-z0-9ğüşıöç\s]/g, " ");
+}
+
 function checkSuspiciousRoute() {
-  const path = window.location.pathname.toLowerCase();
-  const query = window.location.search.toLowerCase();
+  const rawPath = decodeURIComponent(window.location.pathname.toLowerCase());
+  const rawQuery = decodeURIComponent(window.location.search.toLowerCase());
+  const targetText = normalizeText(rawPath + " " + rawQuery);
 
   const suspiciousWords = [
     "admin",
     "login",
-    "dashboard",
+    "user",
+    "users",
+    "account",
+    "profile",
     "panel",
+    "dashboard",
+    "link",
+    "github",
+    "git",
     "secret",
     "hidden",
     "private",
@@ -150,14 +168,13 @@ function checkSuspiciousRoute() {
     "ctf",
     "hack",
     "phpmyadmin",
-    "wp-admin",
-    "robots.txt",
-    ".env",
-    ".git"
+    "wp admin",
+    "robots",
+    "env"
   ];
 
   const shouldTrigger = suspiciousWords.some((word) =>
-    path.includes(word) || query.includes(word)
+    targetText.includes(word)
   );
 
   if (shouldTrigger) {
