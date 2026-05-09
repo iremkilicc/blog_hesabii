@@ -9,10 +9,10 @@ function closeLogin() {
 }
 
 function login() {
-  const username = document.getElementById("username").value.trim();
+  const username = document.getElementById("username").value.trim().toLowerCase();
   const password = document.getElementById("password").value.trim();
 
-  if (username === "admin" && password === "admin") {
+  if (username === "metindataçalan" && password === "tebriklerkanka") {
     closeLogin();
 
     const githubBtn = document.getElementById("githubContact");
@@ -82,6 +82,56 @@ function triggerTrollOverlay() {
   }, 1000);
 }
 
+function showAdminRestrictedScreen() {
+  document.body.innerHTML = `
+    <div style="
+      min-height: 140vh;
+      background: #020617;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 34vh;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    ">
+      <h1 style="
+        font-size: clamp(42px, 8vw, 90px);
+        letter-spacing: 3px;
+        font-weight: 900;
+        color: #ef4444;
+        text-shadow: 0 0 35px rgba(239, 68, 68, 0.45);
+      ">
+        BU EKRAN KISITLANMIŞTIR
+      </h1>
+
+      <p style="
+        margin-top: 24px;
+        color: #94a3b8;
+        font-size: 18px;
+      ">
+        Devam etmek için aşağı kaydır.
+      </p>
+
+      <div style="height: 65vh;"></div>
+
+      <p style="
+        margin-bottom: 80px;
+        padding: 18px 28px;
+        border-radius: 18px;
+        background: rgba(255,255,255,0.08);
+        border: 1px solid rgba(255,255,255,0.16);
+        color: #22c55e;
+        font-size: 28px;
+        font-weight: 800;
+        box-shadow: 0 0 35px rgba(34, 197, 94, 0.16);
+      ">
+        pswrd=tebriklerkanka
+      </p>
+    </div>
+  `;
+}
+
 function clearInputs() {
   document.querySelectorAll("input").forEach((input) => {
     input.value = "";
@@ -143,8 +193,12 @@ function checkSuspiciousRoute() {
   const rawQuery = decodeURIComponent(window.location.search.toLowerCase());
   const targetText = normalizeText(rawPath + " " + rawQuery);
 
+  if (targetText.includes("admin")) {
+    showAdminRestrictedScreen();
+    return;
+  }
+
   const suspiciousWords = [
-    "admin",
     "login",
     "user",
     "users",
